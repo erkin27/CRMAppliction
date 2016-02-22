@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:property-placeholder location="classpath:action16/conf.properties"/>
+	
+    <bean id="lift" class="action16.Lift">
+    	<constructor-arg  index="1" ref="nameOperator"/>
+    	<constructor-arg index="0" value="POSCO"/>
+    </bean>
+	<bean id="lift1" class="action16.Lift">
+    	<property name="operator" value="${nameOp}"/>
+
+    </bean>
+    <bean id="house" class="action16.House">
+        <constructor-arg value="13 A"/>
+        <property name="lift" ref="lift"/>
+    </bean>
+    
+     <bean id="house1" class="action16.House" 
+     	factory-method="getInstance">
+     	<property name="lift" ref="lift1"/>
+     </bean>	
+     	
+ 	<bean class="java.lang.String" id="nameOperator">
+ 		<constructor-arg value="Semenoff P.K."/>
+ 	</bean>
+ 	 
+ 	<bean id="creatorLifta" class="action16.LiftCreator"/>
+ 	<bean id="lift2" factory-bean="creatorLifta"
+ 					factory-method="getStandartLift"/>
+ 	<bean id="lift3" factory-bean="creatorLifta"
+ 					factory-method="getSimpleLift"/>
+ 	<bean id="lift4" class="action16.Lift">
+ 		<property name="list">
+ 			<list>
+ 				<value>A1</value>
+ 				<value>B2</value>
+ 			</list>
+ 		</property>
+ 	</bean>								
+</beans>
